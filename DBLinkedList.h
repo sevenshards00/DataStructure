@@ -36,7 +36,7 @@ int LNext(List* plist, LData* pdata); // 리스트의 맨 처음 노드 참조 이후 참조
 
 int LPrev(List* plist, LData* pdata); // 이전 노드 참조
 
-LData LRemove(List* plist); // 노드 삭제, 이건 일단 챕터 끝나고 따로 생각해보기로
+LData LRemove(List* plist);// 노드 삭제
 
 int LCount(List* plist); // 현재 리스트에 있는 노드의 수 반환
 

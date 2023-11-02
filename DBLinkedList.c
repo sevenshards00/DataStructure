@@ -74,7 +74,7 @@ int LPrev(List* plist, LData* pdata) // 이전 노드 참조
 	return TRUE;
 }
 
-LData LRemove(List* plist) // 노드 삭제, 이건 일단 챕터 끝나고 따로 생각해보기로
+LData LRemove(List* plist) // 노드 삭제
 {
 	Node* rNode = plist->cur;
 	LData rData = plist->cur->data;
@@ -82,19 +82,25 @@ LData LRemove(List* plist) // 노드 삭제, 이건 일단 챕터 끝나고 따로 생각해보기로
 	// 맨 첫 번째 노드를 지운다고 하면
 	if (plist->cur == plist->head)
 	{
-		plist->cur = plist->cur->next;
-		plist->head = plist->cur;
-		plist->cur->prev = NULL;
+		plist->cur = plist->cur->next; // 현재 커서 위치를 다음으로 옮긴다
+		plist->head = plist->cur; // 그리고 헤드를 현재 커서 위치로 옮기고
+		plist->cur->prev = NULL; // 현재 커서가 가리키는 이전 노드를 NULL로 바꾼다
 	}
+	// 만약 마지막 노드를 지운다면
 	else if (plist->cur->next == NULL)
 	{
-		plist->cur = plist->cur->prev;
-		plist->cur->next = NULL;
+		plist->cur = plist->cur->prev; // 현재 커서의 위치를 앞으로 이동하고
+		plist->cur->next = NULL; // 현재 커서가 가리키는 노드의 다음 노드를 가리키지 않게 한다.
 	}
+	// 둘 다 아닌 경우
 	else
 	{
+		// 이 부분이 가장 문제이기도 했지만, 알고나니 또 아차 싶었던 부분
+		// 현재 커서가 가리키고 있는 이전 노드의 다음 노드를 가리키는 주소값에 현재 노드가 가리키는 다음 노드 주소값을 넣는다.
 		plist->cur->prev->next = plist->cur->next;
+		// 현재 커서가 가리키고 있는 다음 노드의 이전 노드를 가리키는 주소값에 현재 노드가 가리키는 이전 노드 주소값을 넣는다.
 		plist->cur->next->prev = plist->cur->prev;
+		// 그리고 마지막으로 현재 위치를 앞의 노드로 옮긴다.
 		plist->cur = plist->cur->prev;
 	}
 
