@@ -129,6 +129,10 @@
   <ItemGroup>
     <ClInclude Include="ArrayBaseStack.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ArrayBaseStack.c" />
+    <ClCompile Include="ArrayStackMain.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
