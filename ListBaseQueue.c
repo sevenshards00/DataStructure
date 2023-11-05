@@ -1,5 +1,6 @@
 // 11.05 리스트 기반 큐
-// head로만 노드가 들어오는 리스트 생각, 다만 head와 tail이 존재한다 생각하자. 조회는 없다
+// 잘못 생각했다. 데이터는 tail쪽으로 들어와야 한다.
+// 이대로 구현한거면 stack과 다를 것이 없어진다. 다만 head와 tail이 존재한다 생각하자. 조회는 없다
 // ListBaseQueue.c
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,8 +31,15 @@ void QEnqueue(Queue* pq, Data data) // Queue에 노드 삽입
 	}
 	else
 	{
+		/*
+		* 잘못 구현한 코드. 이대로 구현하면 스택이지, 큐가 아니다.
+		* head쪽으로 들어와서 head쪽에서 데이터가 나가게 만들어놨으니 스택이다. 큐가 아니다.
+		* 노드는 tail쪽부터 쌓인다.
 		newNode->next = pq->front;
 		pq->front = newNode;
+		*/
+		pq->rear->next = newNode;
+		pq->rear = newNode;
 	}
 }
 Data QDequeue(Queue* pq) // 현재 Queue에서 front를 가리키고 있는 노드 제거
