@@ -1,5 +1,5 @@
 /*
-* 선형 자료구조 - 연결 리스트 기반 Stack 계산기 v0.2
+* 선형 자료구조 - 연결 리스트 기반 Stack 계산기 v0.3
 * 파일명: InfixToPostfix.h
 * 파일 버전: 0.1
 * 작성자: Sevenshards

@@ -127,13 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="InfixCalculator.h" />
     <ClInclude Include="InfixToPostfix.h" />
     <ClInclude Include="ListBaseStack.h" />
     <ClInclude Include="PostCalculator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="InfixCalculator.c" />
     <ClCompile Include="InfixToPostfix.c" />
-    <ClCompile Include="PostCalculatorMain.c" />
+    <ClCompile Include="InfixCalculatorMain.c" />
     <ClCompile Include="ListBaseStack.c" />
     <ClCompile Include="PostCalculator.c" />
   </ItemGroup>
