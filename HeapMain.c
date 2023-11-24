@@ -13,23 +13,24 @@
 
 int DataPriorityComp(char ch1, char ch2)
 {
-	return ch2 - ch1;
+	//return ch2 - ch1; // 오름차순
+	return ch1 - ch2; // 내림차순
 }
 
 int main()
 {
 	Heap heap;
-	HeapInit(&heap, DataPriorityComp); // 힙 초기화
+	HeapInit(&heap, DataPriorityComp); // 힙 초기화                                                                               
 
-	HInsert(&heap, 'A'); // 문자 'A'를 힙에 가장 높은 우선 순위로 저장
-	HInsert(&heap, 'B'); // 문자 'B'를 힙에 두 번째 우선 순위로 저장
-	HInsert(&heap, 'C'); // 문자 'C'를 힙에 가장 낮은 우선 순위로 저장
+	HInsert(&heap, 'A'); // 문자 'A'를 저장
+	HInsert(&heap, 'B'); // 문자 'B'를 저장
+	HInsert(&heap, 'C'); // 문자 'C'를 저장
 	printf("%c \n", HDelete(&heap)); // Heap에서 삭제되는 문자 확인
 
 	// 2회차 저장
-	HInsert(&heap, 'A'); // 문자 'A'를 힙에 가장 높은 우선 순위로 저장
-	HInsert(&heap, 'B'); // 문자 'B'를 힙에 두 번째 우선 순위로 저장
-	HInsert(&heap, 'C'); // 문자 'C'를 힙에 가장 낮은 우선 순위로 저장
+	HInsert(&heap, 'A'); // 문자 'A'를 저장
+	HInsert(&heap, 'B'); // 문자 'B'를 저장
+	HInsert(&heap, 'C'); // 문자 'C'를 저장
 	printf("%c \n", HDelete(&heap)); // Heap에서 삭제되는 문자 확인
 
 	while (!HisEmpty(&heap))

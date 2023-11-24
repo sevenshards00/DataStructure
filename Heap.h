@@ -28,7 +28,7 @@ typedef struct _heap
 	HData heapArr[HEAP_LEN]; // 배열 기반의 힙
 } Heap;
 
-void HeapInit(Heap* ph); // 힙의 초기화
+void HeapInit(Heap* ph, PriorityComp pc); // 힙의 초기화
 int HisEmpty(Heap* ph); // 힙이 비었는지 확인
 
 void HInsert(Heap* ph, HData data); // 힙에 데이터 삽입

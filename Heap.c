@@ -60,7 +60,7 @@ int GetHiPriChildIDX(Heap* ph, int idx)
 		return 0;
 	// 자식 노드가 하나 뿐일 경우는 왼쪽 자식 노드이며, 힙의 마지막 노드가 된다.
 	// 그렇기 때문에 조건식을 아래와 같이 주면 자식 노드가 하나인 상황을 판별할 수 있음.
-	else if (GetLChildIDX == ph->numOfData) // 왼쪽 자식 노드만 존재하는 경우
+	else if (GetLChildIDX(idx) == ph->numOfData) // 왼쪽 자식 노드만 존재하는 경우
 		return GetLChildIDX(idx);
 	else // 왼쪽, 오른쪽 자식 노드가 다 있는 경우.
 	{
@@ -106,8 +106,8 @@ HData HDelete(Heap* ph)
 	// 루트 노드부터 시작해서 자식 노드와 우선 순위를 비교
 	while (childIdx = GetHiPriChildIDX(ph, parentIdx))
 	{
-		if (ph->comp(lastElem, ph->heapArr[childIdx]) > 0) // 마지막 노드와 우선 순위를 비교
-			break; // 마지막 노드의 우선순위가 높다면 반복문 종료
+		if (ph->comp(lastElem, ph->heapArr[childIdx]) >= 0) // 마지막 노드와 우선 순위를 비교
+			break; // 마지막 노드의 우선순위가 높거나 같다면 반복문 종료
 		ph->heapArr[parentIdx] = ph->heapArr[childIdx]; // 그렇지 않다면 현재 자식 노드의 레벨을 하나 올린다. -> 실제로 레벨을 올림
 		parentIdx = childIdx; // 그리고 마지막 노드가 저장될 위치를 한 레벨 아래로 낮춘다. -> 인덱스만 변경, 실제로 변경은 안함
 	}
