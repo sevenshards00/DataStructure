@@ -16,9 +16,9 @@ void BubbleSort(int arr[], int n)
 	int i, j; // 반복문에 쓰일 변수 i, j
 	int temp; // 변수 swap에 사용할 임시 변수
 
-	for (i = 0; i < n - 1; i++)
+	for (i = 0; i < n - 1; i++) // 데이터가 n개라면 n-1만큼의 반복을 수행하여 정렬 진행
 	{
-		for (j = 0; j < (n - i) - 1; j++)
+		for (j = 0; j < (n - i) - 1; j++) // 교환이 이뤄지는 부분. 정렬되어 가면서 비교할 인덱스의 수가 줄어가므로 조건식은 j<(n-i)-1
 		{
 			if (arr[j] > arr[j + 1])
 			{
