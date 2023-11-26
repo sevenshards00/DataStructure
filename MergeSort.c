@@ -68,8 +68,6 @@ void MergeSort(int arr[], int left, int right)
 		// 정렬이 된 배열을 병합
 		MergeTwoArea(arr, left, mid, right);
 	}
-
-	
 }
 
 int main()
