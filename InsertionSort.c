@@ -20,7 +20,7 @@ void InsertionSort(int arr[], int n)
 	{
 		insertData = arr[i]; // 정렬 대상을 별도로 저장
 
-		for (j = i - 1; j >= 0; j--) // i-1 번째 요소부터 첫 번째 요소까지 역순으로
+		for (j = i - 1; j >= 0; j--) // i-1 번째 요소부터 첫 번째 요소까지 역순으로 -> 정렬이 된 영역과 비교
 		{
 			if (arr[j] > insertData)
 				arr[j + 1] = arr[j]; // 비교 대상을 한 칸 이동
