@@ -19,10 +19,14 @@ void Swap(int arr[], int idx1, int idx2)
 	arr[idx2] = temp;
 }
 
+// 피벗의 중간값을 구하기 위해 정의한 함수
 int MedianOfThree(int arr[], int left, int right)
 {
+	// 배열로 가장 첫 번째 인덱스, 중간값, 가장 마지막 인덱스를 배열에 저장.
 	int samples[3] = { left, (left + right) / 2, right };
 
+	// 값의 대소 비교를 진행한다.
+	// 값을 비교하여 중간값에 맞는 인덱스를 반환하기 위함
 	if (arr[samples[0]] > arr[samples[1]])
 		Swap(samples, 0, 1);
 
@@ -32,6 +36,7 @@ int MedianOfThree(int arr[], int left, int right)
 	if (arr[samples[0]] > arr[samples[1]])
 		Swap(samples, 0, 1);
 
+	// 마지막으로 중간값의 인덱스를 반환.
 	return samples[1];
 }
 
@@ -80,7 +85,7 @@ int main()
 {
 	//int arr[7] = {3, 2, 4, 1, 7, 6, 5};
 	//int arr[3] = { 3, 3, 3 };
-	int arr[15] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+	int arr[15] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
 	int len = sizeof(arr) / sizeof(int);
 	int i;
