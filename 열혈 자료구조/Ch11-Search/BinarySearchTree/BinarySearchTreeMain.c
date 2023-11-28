@@ -1,6 +1,6 @@
 /*
 * 비선형 자료구조 - 연결 리스트 기반 이진 탐색 트리
-* 파일명: BinarySearchTreeMain.h
+* 파일명: BinarySearchTreeMain.c
 * 파일 버전: 0.2
 * 작성자: Sevenshards
 * 작성 일자: 2023-11-28
@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "BinarySearchTree.h"
+#include "BinarySearchTree.c"
 
 int main()
 {
