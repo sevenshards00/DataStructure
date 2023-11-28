@@ -1,12 +1,12 @@
 /*
 * 비선형 자료구조 - 연결 리스트 기반 이진 트리
 * 파일명: BinaryTree.h
-* 파일 버전: 0.2
+* 파일 버전: 0.3
 * 작성자: Sevenshards
-* 작성 일자: 2023-11-23
+* 작성 일자: 2023-11-28
 * 이전 버전 작성 일자: 2023-11-23
-* 버전 내용: 전위, 중위 순회 추가 및 순회 시 할 일을 결정할 수 있도록 함수 포인터 사용.
-* 이전 버전 내용: 중위 순회 기능까지 포함한 이진 트리 구현.
+* 버전 내용: 왼쪽, 오른쪽 자식 노드 연결 변경 함수 추가 및 왼쪽, 오른쪽 자식 노드 제거 함수 추가
+* 이전 버전 내용: 전위, 중위 순회 추가 및 순회 시 할 일을 결정할 수 있도록 함수 포인터 사용.
 */
 // 저자의 표현을 빌리자면, 이진 트리를 구현"할 수 있는 도구"를 만드는 과정이다.
 // 어디다 갖다 쓸 것인가는 나중에 생각하자.
@@ -39,6 +39,11 @@ BTreeNode* GetRightSubTree(BTreeNode* bt); // 오른쪽 서브 트리의 주소 값(오른쪽 
 void MakeLeftSubTree(BTreeNode* main, BTreeNode* sub); // 매개변수 sub로 전달된 트리 또는 노드를 매개변수 main의 왼쪽 서브트리로 연결
 void MakeRightSubTree(BTreeNode* main, BTreeNode* sub); // 매개 변수 sub로 전달된 트리 또는 노드를 매개변수 main의 오른쪽 서브트리로 연결
 
+// 11.28 추가
+// 메모리 소멸을 수반하지 않고 왼쪽, 오른쪽 자식 노드 변경
+void ChangeLeftSubTree(BTreeNode* main, BTreeNode* sub); // 매개변수 sub로 전달된 트리 또는 노드를 매개변수 main의 왼쪽 서브트리로 연결
+void ChangeRightSubTree(BTreeNode* main, BTreeNode* sub); // 매개 변수 sub로 전달된 트리 또는 노드를 매개변수 main의 오른쪽 서브트리로 연결
+
 // 순회 (재귀를 이용하여 구현한다!)
 // 함수 포인터를 선언 -> 이 부분에 대한 설명이 좀 더 필요하다.
 typedef void VisitFuncPtr(BTData data);
@@ -58,5 +63,10 @@ void PostorderTraversal(BTreeNode* bt, VisitFuncPtr action);
 
 // 트리의 모든 노드 삭제
 void DeleteTree(BTreeNode* bt);
+
+// 11.28 추가
+// 노드 삭제 부분
+BTreeNode* RemoveLeftSubTree(BTreeNode* bt); // 왼쪽 자식 노드를 트리에서 제거, 제거된 노드의 주소값 반환
+BTreeNode* RemoveRightSubTree(BTreeNode* bt); // 오른쪽 자식 노드를 트리에서 제거, 제거된 노드의 주소값 반환
 
 #endif
