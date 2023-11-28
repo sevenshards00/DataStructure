@@ -60,7 +60,7 @@ void MakeRightSubTree(BTreeNode* main, BTreeNode* sub) // 매개 변수 sub로 전달된
 }
 
 // 11.28 추가
-// 메모리 소멸을 수반하지 않고 왼쪽, 오른쪽 자식 노드 변경
+// 메모리 할당 해제 없이 main의 왼쪽 자식 노드 변경
 void ChangeLeftSubTree(BTreeNode* main, BTreeNode* sub) // 매개변수 sub로 전달된 트리 또는 노드를 매개변수 main의 왼쪽 서브트리로 연결
 {
 	main->left = sub;
