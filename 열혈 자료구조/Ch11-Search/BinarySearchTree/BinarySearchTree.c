@@ -27,7 +27,7 @@ BSTData BSTGetNodeData(BTreeNode* bst)
 void BSTInsert(BTreeNode** pRoot, BSTData data)
 {
 	BTreeNode* pNode = NULL; // 현재 노드 기준의 부모 노드
-	BTreeNode* cNode = *pRoot; // 현재 노드, 루트 노드에서부터 시작하므로 루트 노드의 주소값으로 초기화
+	BTreeNode* cNode = *pRoot; // 현재(current) 가리키는 노드, 루트 노드에서부터 시작하므로 루트 노드의 주소값으로 초기화
 	BTreeNode* newNode = NULL; // 새로 생성될 노드
 
 	// 새로 생성될 노드(새 데이터가 담길 노드)가 추가될 위치를 찾기
@@ -64,7 +64,7 @@ void BSTInsert(BTreeNode** pRoot, BSTData data)
 // 이진 탐색 트리를 대상으로 데이터 탐색
 BTreeNode* BSTSearch(BTreeNode* bst, BSTData target)
 {
-	BTreeNode* cNode = bst; // 현재 가리키는 노드, 트리의 주소값(루트 노드의 주소값)부터 시작한다.
+	BTreeNode* cNode = bst; // 현재(current) 가리키는 노드, 트리의 주소값(루트 노드의 주소값)부터 시작한다.
 	BSTData cData; // 현재 가리키는 노드의 데이터 값
 
 	// 현재 가리키는 노드가 NULL이 아닐때까지
@@ -87,9 +87,9 @@ BTreeNode* BSTSearch(BTreeNode* bst, BSTData target)
 BTreeNode* BSTRemove(BTreeNode** pRoot, BSTData target)
 {
 	// 삭제 대상이 루트 노드일 경우도 고려하여 진행
-	BTreeNode* pVRoot = MakeBTreeNode(); // 가상 루트 노드 (Virtual Root Node)
-	BTreeNode* pNode = pVRoot; // 부모 노드, 초기화 하면서 가상의 루트 노드를 가리킨다
-	BTreeNode* cNode = *pRoot; // 현재 노드, 초기화 하면서 루트 노드를 가리킨다
+	BTreeNode* pVRoot = MakeBTreeNode(); // 가상 루트 노드 (Virtual Root Node) - 저자가 쓴 꼼수(?)
+	BTreeNode* pNode = pVRoot; // 현재 가리키는 노드의 부모 노드, 초기화 하면서 가상의 루트 노드를 가리킨다
+	BTreeNode* cNode = *pRoot; // 현재(current) 가리키는 노드, 초기화 하면서 루트 노드를 가리킨다
 	BTreeNode* dNode = NULL; // 지워질 대상의 노드, 일부 컴파일러에서는 초기화하지 않으면 에러를 띄우므로 NULL로 초기화
 
 	// 루트 노드를 pVRoot가 가리키고 있는 노드의 오른쪽 자식 노드가 되게 한다.
@@ -123,7 +123,7 @@ BTreeNode* BSTRemove(BTreeNode** pRoot, BSTData target)
 	// 2번 케이스: 삭제 대상이 자식 노드를 하나 갖는 경우
 	else if (GetLeftSubTree(dNode) == NULL || GetRightSubTree(dNode) == NULL) // 삭제할 노드의 왼쪽 또는 오른쪽에 자식 노드가 있다면
 	{
-		BTreeNode* dcNode; // 삭제 대상의 자식(child) 노드를 가리키기 위해 사용할 BTreeNode* 변수
+		BTreeNode* dcNode; // 삭제 대상 노드의 자식(child) 노드를 가리키기 위해 사용할 BTreeNode* 변수
 
 		if (GetLeftSubTree(dNode) != NULL) // 삭제할 노드의 왼쪽에 자식 노드가 있다면
 			dcNode = GetLeftSubTree(dNode); // dcNode가 삭제할 노드의 왼쪽 자식을 가리키게 한다.
@@ -154,14 +154,14 @@ BTreeNode* BSTRemove(BTreeNode** pRoot, BSTData target)
 
 		// 대체할 노드를 찾은 후
 		// 대체 노드에 저장된 값을 삭제할 노드에 대입
-		delData = GetData(dNode); // 삭제할 노드에 있는 값을 받는다.
+		delData = GetData(dNode); // 삭제할 노드에 있는 값을 받는다. (백업)
 		SetData(dNode, GetData(mNode)); // 삭제할 노드에 있는 값을 대체할 노드의 값으로 변경
 
-		// 대체 노드의 부모 노드와 자식 노드를 연결한다.
+		// 대체할 노드의 부모 노드와 대체 노드의 자식 노드를 연결한다.
 		if (GetLeftSubTree(mpNode) == mNode) // 대체할 노드의 부모 노드의 왼쪽 자식 노드가 대체할 노드라면
-			ChangeLeftSubTree(mpNode, GetRightSubTree(mNode)); // 왼쪽 자식 노드로 연결
+			ChangeLeftSubTree(mpNode, GetRightSubTree(mNode)); // 대체할 노드의 자식 노드를 왼쪽 자식 노드로 연결
 		else // 대체할 노드의 부모 노드의 오른쪽 자식 노드가 대체할 노드라면
-			ChangeRightSubTree(mpNode, GetRightSubTree(mNode)); // 오른쪽 자식 노드로 연결
+			ChangeRightSubTree(mpNode, GetRightSubTree(mNode)); // 대체할 노드의 자식 노드를 오른쪽 자식 노드로 연결
 
 		dNode = mNode; // 삭제할 노드를 대체할 노드로 변경
 		SetData(dNode, delData); // 삭제할 노드가 가지고 있던 데이터를 다시 입력
