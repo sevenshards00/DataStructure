@@ -164,6 +164,7 @@ BTreeNode* BSTRemove(BTreeNode** pRoot, BSTData target)
 		*pRoot = GetRightSubTree(pVRoot); // 루트 노드가 바뀐 것이므로 가상 루트 노드의 오른쪽 자식을 루트노드로 변경
 
 	free(pVRoot); // 가상 루트 노드의 소멸
+	*pRoot = Rebalance(pRoot); 	// 노드 제거 후 리밸런싱
 	return dNode; // 삭제 노드의 주소값 반환
 }
 
