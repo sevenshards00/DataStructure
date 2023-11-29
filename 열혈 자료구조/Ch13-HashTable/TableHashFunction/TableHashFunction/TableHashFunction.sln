@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TableHashFunction", "TableHashFunction.vcxproj", "{C81889BE-23D6-4114-8441-2B6C368A25E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Debug|x64.ActiveCfg = Debug|x64
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Debug|x64.Build.0 = Debug|x64
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Debug|x86.ActiveCfg = Debug|Win32
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Debug|x86.Build.0 = Debug|Win32
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Release|x64.ActiveCfg = Release|x64
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Release|x64.Build.0 = Release|x64
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Release|x86.ActiveCfg = Release|Win32
+		{C81889BE-23D6-4114-8441-2B6C368A25E1}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {065548B2-5B00-4972-BDE7-22B9B2B692CC}
+	EndGlobalSection
+EndGlobal
