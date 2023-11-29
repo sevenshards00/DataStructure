@@ -38,7 +38,7 @@ int main()
 	empInfoArr[GetHashValue(emp2.empNum)] = emp2;
 	empInfoArr[GetHashValue(emp3.empNum)] = emp3;
 	
-	// 키를 해시한 값을 인덱스 갓ㅂ으로 이용하여 탐색
+	// 키를 해시한 값을 인덱스 값으로 이용하여 탐색
 	r1 = empInfoArr[GetHashValue(20120003)];
 	r2 = empInfoArr[GetHashValue(20130012)];
 	r3 = empInfoArr[GetHashValue(20170049)];
