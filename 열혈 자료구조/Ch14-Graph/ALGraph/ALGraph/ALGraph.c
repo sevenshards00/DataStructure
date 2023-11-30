@@ -55,6 +55,8 @@ void AddEdge(ALGraph* pg, int fromV, int toV)
 {
 	LInsert(&(pg->adjList[fromV]), toV); // from->to
 	LInsert(&(pg->adjList[toV]), fromV); // to->from
+
+	pg->numEdge += 1;
 }
 // 간선 정보 출력
 void ShowGraphEdgeInfo(ALGraph* pg)
