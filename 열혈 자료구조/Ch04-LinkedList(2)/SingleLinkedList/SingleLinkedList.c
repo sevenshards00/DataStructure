@@ -18,6 +18,7 @@ void ListInit(List* plist)
 	plist->head = (Node*)malloc(sizeof(Node)); // 더미 노드를 바로 가리키게 한다.
 	plist->head->next = NULL; // 더미 노드가 가리키는 다음을 NULL로
 	plist->numOfData = 0; // 그리고 더미노드를 제외하고 실제 데이터 수를 기록해야하므로 0이다. -1이 아니다.
+	plist->comp = NULL; // 초기화시 우선순위 판별을 위한 함수는 미지정된 상태이므로 NULL
 }
 
 void FInsert(List* plist, LData data) // 정렬 기준 없이 리스트의 노드를 생성할 때 사용
