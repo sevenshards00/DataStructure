@@ -61,6 +61,7 @@ void AddEdge(ALGraph* pg, int fromV, int toV)
 {
 	LInsert(&(pg->adjList[fromV]), toV); // from->to
 	LInsert(&(pg->adjList[toV]), fromV); // to->from
+	pg->numEdge += 1; // 간선 갯수 추가
 }
 // 간선 정보 출력
 void ShowGraphEdgeInfo(ALGraph* pg)
@@ -115,6 +116,7 @@ void DFSShowGraphVertex(ALGraph* pg, int startV)
 	// SPush(&stack, visitV); // 시작 정점의 정보를 스택에 넣는다.
 
 	// visitV에 담긴 정점과 연결된 정점의 방문을 시도하기 위한 반복문
+	// 가독성 차원에서 '== TRUE' 삽입, 어차피 반환 결과가 TRUE, FALSE이긴 하지만 코드 읽기 편하려면 넣는게 좋다
 	while (LFirst(&(pg->adjList[visitV]), &nextV) == TRUE) // 현재 정점과 연결된 간선이 있다면
 	{
 		// 현재 visitV와 연결된 정점의 정보는 nextV에 담긴 상태
@@ -128,7 +130,8 @@ void DFSShowGraphVertex(ALGraph* pg, int startV)
 		}
 		else // 방문에 성공하지 못했다면
 		{
-			while (LNext(&(pg->adjList[visitV]), &nextV)) // 다른 방문할 정점을 찾는다.
+			// 가독성 차원에서 '== TRUE' 삽입, 어차피 반환 결과가 TRUE, FALSE이긴 하지만 코드 읽기 편하려면 넣는게 좋다
+			while (LNext(&(pg->adjList[visitV]), &nextV) == TRUE) // 다른 방문할 정점을 찾는다.
 			{
 				if (VisitVertex(pg, nextV) == TRUE) // 정점 방문에 성공했다면
 				{
