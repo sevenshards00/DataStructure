@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 리스트(List) - 단일 연결 리스트
 * 파일명: SingleLinkedList.h
-* 파일 버전: 0.3
+* 파일 버전: 0.4
 * 작성자: Sevenshards
 * 작성 일자: 2024-02-01
 * 이전 버전 작성 일자: 2024-01-31
-* 버전 내용: STL의 forward_list 흉내내기 (프로토타입 완성)
-* 이전 버전 내용: STL의 forward_list 흉내내기 - 클래스명 변경 및 내부 구현 변경 (미완)
+* 버전 내용: STL의 forward_list 흉내내기 (소멸자 로직 수정)
+* 이전 버전 내용: STL의 forward_list 흉내내기 (프로토타입 완성)
 */
 
 #pragma once
@@ -69,7 +69,8 @@ inline ForwardList<T>::~ForwardList()
 	Node<T> *curr = head->next;
 	Node<T> *before = head;
 
-	while (curr->next != tail)
+	// 널 포인터일 때까지
+	while (curr->next != nullptr)
 	{
 		delete before;
 		before = curr;
