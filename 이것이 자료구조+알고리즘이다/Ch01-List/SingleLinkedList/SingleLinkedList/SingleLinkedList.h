@@ -50,7 +50,8 @@ public:
 		Node<T> *curr = m_head->m_next;
 		Node<T> *before = m_head;
 
-		// 현재 가리키는 노드의 다음이 tail이 아닐 때까지 할당 해제 수행
+		// 현재 가리키는 노드의 다음이 nullptr이 아닐 때까지 할당 해제 수행
+		// tail의 next는 nullptr
 		while (curr->m_next != nullptr)
 		{
 			delete before;
@@ -67,8 +68,142 @@ public:
 		newNode->m_data = in_data;
 		newNode->m_next = m_head->m_next;
 		m_head->m_next = newNode;
+		++m_nodeCnt;
+	}
+	// tail에 노드 삽입
+	void push_back(IN const T &in_data)
+	{
+		// curr와 before를 이용
+		Node<T> *curr = m_head->m_next;
+		Node<T> *before = m_head;
+
+		// loop를 돌면서 tail 직전까지 이동한다.
+		while (curr->m_next != m_tail)
+		{
+			before = curr;
+			curr = curr->m_next;
+		}
+		// loop가 끝나면 curr은 tail의 직전 노드를 가리키게 된다.
+		// 새 노드 생성
+		Node<T> *newNode = new Node<T>();
+		newNode->m_data = in_data;
+		
+		newNode->m_next = m_tail; // 새 노드는 tail을 가리키고
+		curr->m_next = newNode; // tail의 직전 노드가 새 노드를 가리키게 한다.
+		++m_nodeCnt;
+	}
+	// 특정 노드 다음에 노드 삽입
+	bool insert_after(IN const DWORD &idx, IN const T &in_data)
+	{
+		// 지정한 노드 위치가 전체 인덱스를 벗어나는 경우 -> 삽입 불가
+		// 예를 들어 전체 노드가 3개라면 인덱스는 0, 1, 2가 되며 3을 입력 받으면 삽입할 수 없다.
+		if (idx >= m_nodeCnt)
+			return false;
+
+		// 노드의 위치는 0부터 시작한다고 가정
+		DWORD loc = idx;
+
+		Node<T> *curr = m_head->m_next;
+
+		// loop로 현재 노드 위치까지 이동
+		for (DWORD i = 0; i != loc; ++i)
+			curr = curr->m_next;
+		
+		Node<T> *newNode = new Node<T>();
+		newNode->m_next = curr->m_next;
+		newNode->m_data = in_data;
+		curr->m_next = newNode;
+		++m_nodeCnt;
+		return true;
+	}
+	// 특정 위치의 노드 조회
+	bool search(IN const DWORD &idx, OUT T &out_data)
+	{
+		// 지정한 노드 위치가 전체 인덱스를 벗어나는 경우 -> 조회 불가
+		// 예를 들어 전체 노드가 3개라면 인덱스는 0, 1, 2가 되며 3을 입력 받으면 조회할 수 없다.
+		if (idx >= m_nodeCnt)
+			return false;
+
+		DWORD loc = idx;
+		Node<T> *curr = m_head->m_next;
+		// loop로 지정한 위치의 노드까지 이동
+		for (DWORD i = 0; i != loc; ++i)
+			curr = curr->m_next;
+
+		out_data = curr->m_data;
+		return true;
+	}
+	// head에서 노드 삭제
+	bool pop_front(OUT T &out_data)
+	{
+		// head가 가리키는 다음 노드가 tail이라면 -> 리스트가 비었다는 것
+		if (m_head->m_next == m_tail)
+			return false;
+
+		Node<T> *popNode = m_head->m_next; // 삭제 대상 노드는 head 다음의 노드
+		out_data = popNode->m_data; // 삭제 대상 노드의 데이터
+		m_head->m_next = popNode->m_next; // head가 가리키는 다음 노드를 현재 삭제할 노드가 가리키는 다음 노드로 변경
+
+		delete popNode; // 노드를 할당 해제하고
+		--m_nodeCnt; // 노드 개수 감소
+		return true;
+	}
+	// tail에서 노드 삭제
+	bool pop_back(OUT T &out_data)
+	{
+		// head가 가리키는 다음 노드가 tail이라면 -> 리스트가 비었다는 것
+		if (m_head->m_next == m_tail)
+			return false;
+
+		// curr와 before를 이용하여 tail까지 이동
+		Node<T> *curr = m_head->m_next;
+		Node<T> *before = m_head;
+		Node<T> *popNode;
+		
+		// loop를 돌면서 tail 직전까지 이동한다.
+		while (curr->m_next != m_tail)
+		{
+			before = curr;
+			curr = curr->m_next;
+		}
+
+		popNode = curr;
+		out_data = popNode->m_data;
+		before->m_next = m_tail;
+		delete popNode;
+		--m_nodeCnt;
+		return true;
 	}
 
+	// 특정 인덱스의 노드 삭제
+	bool remove(IN const DWORD idx, OUT T &out_data)
+	{
+		if (idx >= m_nodeCnt)
+			return false;
+
+		Node<T> *curr = m_head->m_next;
+		Node<T> *before = m_head;
+		Node<T> *popNode;
+
+		for (DWORD i = 0; i != idx; ++i)
+		{
+			before = curr;
+			curr = curr->m_next;
+		}
+
+		popNode = curr;
+		out_data = popNode->m_data;
+		before->m_next = curr->m_next;
+		delete popNode;
+		--m_nodeCnt;
+		return true;
+	}
+
+	// 리스트의 노드 개수 반환
+	DWORD count()
+	{
+		return m_nodeCnt;
+	}
 private:
 	Node<T> *m_head;
 	Node<T> *m_tail;
