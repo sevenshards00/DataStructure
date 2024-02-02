@@ -68,11 +68,8 @@ template <typename T>
 inline DoublyLinkedList<T>::~DoublyLinkedList()
 {
 	Node<T> *curr = head;
-	while (curr == tail)
-		
-	
 
-	while (curr->next == tail)
+	while (curr->next == nullptr)
 	{
 		curr = curr->next;
 		delete curr->prev;
