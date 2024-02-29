@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 큐(Queue)
 * 파일명: CircularQueue.h
-* 파일 버전: 0.1
+* 파일 버전: 0.11
 * 작성자: Sevenshards
 * 작성 일자: 2024-02-29
-* 이전 버전 작성 일자:
-* 버전 내용: 배열 기반 환형 큐 구현(C++, Template)
-* 이전 버전 내용:
+* 이전 버전 작성 일자: 2024-02-29
+* 버전 내용: NextPosIdx 로직 수정
+* 이전 버전 내용: 배열 기반 환형 큐 구현(C++, Template)
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ private:
 template <typename T>
 DWORD CQueue<T>::NextPosIdx(DWORD idx)
 {
-	if (idx >= m_capacity)
+	if (idx >= m_capacity - 1)
 		return 0;
 	else
 		return idx + 1;
