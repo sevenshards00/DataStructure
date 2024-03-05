@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 트리(Tree)
 * 파일명: ITree.h
-* 파일 버전: 0.11
+* 파일 버전: 0.12
 * 작성자: Sevenshards
 * 작성 일자: 2024-03-05
-* 이전 버전 작성 일자:
-* 버전 내용: 주석 및 노드 갯수 반환하는 함수 추가
-* 이전 버전 내용: 이진 탐색 트리 구현(C++, Template)
+* 이전 버전 작성 일자: 2024-03-05
+* 버전 내용: Transplant 함수 로직 수정 및 자잘한 부분 변경
+* 이전 버전 내용: 주석 및 노드 갯수 반환하는 함수 추가
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -78,11 +78,11 @@ namespace mylib_tree
 		virtual ~ITree() { };
 		
 		// 1) 변경(Insert, Delete)
-		virtual void Insert(IN T key) = 0;
-		virtual void Delete(IN T key) = 0;
+		virtual void Insert(IN const T &key) = 0;
+		virtual void Delete(IN const T &key) = 0;
 
 		// 2) 질의(Search, Minimum, Maximum, Predecessor, Successor)
-		virtual bool Search(IN T key, OUT T *value) = 0;
+		virtual bool Search(IN const T &key, OUT T *value) = 0;
 		virtual void Minimum() = 0;
 		virtual void Maximum() = 0;
 		virtual void Predecessor() = 0;

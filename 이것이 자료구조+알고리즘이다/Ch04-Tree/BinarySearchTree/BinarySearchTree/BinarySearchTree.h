@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 트리(Tree)
 * 파일명: BinarySearchTree.h
-* 파일 버전: 0.11
+* 파일 버전: 0.12
 * 작성자: Sevenshards
 * 작성 일자: 2024-03-05
-* 이전 버전 작성 일자:
-* 버전 내용: 주석 및 노드 갯수 반환하는 함수 추가
-* 이전 버전 내용: 이진 탐색 트리 구현(C++, Template)
+* 이전 버전 작성 일자: 2024-03-05
+* 버전 내용: Transplant 함수 로직 수정 및 자잘한 부분 변경
+* 이전 버전 내용: 주석 및 노드 갯수 반환하는 함수 추가
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -43,11 +43,11 @@ namespace mylib_tree
 		//--------------------------------------------------------------------
 		
 		// 1) 변경(Insert, Delete)
-		virtual void Insert(IN T key) override;
-		virtual void Delete(IN T key) override;
+		virtual void Insert(IN const T &key) override;
+		virtual void Delete(IN const T &key) override;
 
 		// 2) 질의(Search, Minimum, Maximum, Predecessor, Successor)
-		virtual bool Search(IN T key, OUT T *value) override;
+		virtual bool Search(IN const T &key, OUT T *value) override;
 		virtual void Minimum() override;
 		virtual void Maximum() override;
 		virtual void Predecessor() override;
@@ -95,7 +95,7 @@ namespace mylib_tree
 // 용도: 노드 삽입
 //--------------------------------------------------------------------
 template <typename T>
-void mylib_tree::CBSTree<T>::Insert(IN T key)
+void mylib_tree::CBSTree<T>::Insert(IN const T &key)
 {
 	m_Insert(m_pRoot, key);
 }
@@ -105,7 +105,7 @@ void mylib_tree::CBSTree<T>::Insert(IN T key)
 // 용도: 노드 삭제
 //--------------------------------------------------------------------
 template <typename T>
-void mylib_tree::CBSTree<T>::Delete(IN T key)
+void mylib_tree::CBSTree<T>::Delete(IN const T &key)
 {
 	m_Delete(m_pRoot, key);
 }
@@ -116,7 +116,7 @@ void mylib_tree::CBSTree<T>::Delete(IN T key)
 // 용도: 해당 Key값을 가지고 있는 노드의 값 출력 (현재 기준으로는 Key를 출력)
 //--------------------------------------------------------------------
 template <typename T>
-bool mylib_tree::CBSTree<T>::Search(IN T key, OUT T *value)
+bool mylib_tree::CBSTree<T>::Search(IN const T &key, OUT T *value)
 {
 	st_Node<T> *result = m_Search(m_pRoot, key);
 	
@@ -318,7 +318,7 @@ void mylib_tree::CBSTree<T>::m_Delete(IN st_Node<T> *pNode, IN T key)
 template <typename T>
 void mylib_tree::CBSTree<T>::m_Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode)
 {
-	if (dPos == &m_NIL)
+	if (dPos->m_parent == &m_NIL)
 		m_pRoot = pNode;
 	else if (dPos == dPos->m_parent->m_left)
 		dPos->m_parent->m_left = pNode;
