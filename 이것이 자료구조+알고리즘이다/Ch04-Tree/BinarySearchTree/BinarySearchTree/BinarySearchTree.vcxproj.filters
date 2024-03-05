@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CBinarySearchTree.h">
+    <ClInclude Include="ITree.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CBinaryTree.h">
+    <ClInclude Include="BinarySearchTree.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
