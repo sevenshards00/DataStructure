@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 트리(Tree)
 * 파일명: main.cpp
-* 파일 버전: 0.1
+* 파일 버전: 0.11
 * 작성자: Sevenshards
 * 작성 일자: 2024-03-05
 * 이전 버전 작성 일자:
 * 버전 내용: 이진 탐색 트리 구현(C++, Template)
-* 이전 버전 내용:
+* 이전 버전 내용: 이진 탐색 트리 구현(C++, Template)
 */
 
 #include <iostream>
@@ -30,6 +30,8 @@ int main()
 	CBSTest.Insert(139);
 	CBSTest.Insert(67);
 
+	CBSTest.Count();
+
 	CBSTest.Delete(16);
 
 	int *find = new int;
@@ -40,6 +42,6 @@ int main()
 	CBSTest.PreOrder();
 	CBSTest.InOrder();
 	CBSTest.PostOrder();
-
+	CBSTest.Count();
 	return 0;
 }

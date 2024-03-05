@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 트리(Tree)
 * 파일명: ITree.h
-* 파일 버전: 0.1
+* 파일 버전: 0.11
 * 작성자: Sevenshards
 * 작성 일자: 2024-03-05
 * 이전 버전 작성 일자:
 * 버전 내용: 이진 탐색 트리 구현(C++, Template)
-* 이전 버전 내용:
+* 이전 버전 내용: 이진 탐색 트리 구현(C++, Template)
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -92,5 +92,8 @@ namespace mylib_tree
 		virtual void PreOrder() = 0;
 		virtual void InOrder() = 0;
 		virtual void PostOrder() = 0;
+
+		// 4) 기타 연산
+		virtual void Count() = 0;
 	};
 }

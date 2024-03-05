@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 트리(Tree)
 * 파일명: BinarySearchTree.h
-* 파일 버전: 0.1
+* 파일 버전: 0.11
 * 작성자: Sevenshards
 * 작성 일자: 2024-03-05
 * 이전 버전 작성 일자:
 * 버전 내용: 이진 탐색 트리 구현(C++, Template)
-* 이전 버전 내용:
+* 이전 버전 내용: 이진 탐색 트리 구현(C++, Template)
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -57,6 +57,9 @@ namespace mylib_tree
 		virtual void PreOrder() override;
 		virtual void InOrder() override;
 		virtual void PostOrder() override;
+
+		// 4) 기타 연산
+		virtual void Count() override;
 		
 	private:
 		// 1) 변경(Insert, Delete)
@@ -87,7 +90,6 @@ namespace mylib_tree
 //--------------------------------------------------------------------
 
 // 1) 변경(Insert, Delete)
-
 //--------------------------------------------------------------------
 // 함수명: Insert
 // 용도: 노드 삽입
@@ -98,6 +100,10 @@ void mylib_tree::CBSTree<T>::Insert(IN T key)
 	m_Insert(m_pRoot, key);
 }
 
+//--------------------------------------------------------------------
+// 함수명: Delete
+// 용도: 노드 삭제
+//--------------------------------------------------------------------
 template <typename T>
 void mylib_tree::CBSTree<T>::Delete(IN T key)
 {
@@ -198,6 +204,17 @@ void mylib_tree::CBSTree<T>::PostOrder()
 	std::wcout << L'\n';
 }
 
+// 4) 기타 연산
+//--------------------------------------------------------------------
+// 함수명: Count
+// 용도: 트리의 노드 갯수 출력
+//--------------------------------------------------------------------
+template <typename T>
+void mylib_tree::CBSTree<T>::Count()
+{
+	std::wcout << L"Node Count: " << m_nodeCnt << L'\n';
+}
+
 //--------------------------------------------------------------------
 // 클래스 멤버 함수 정의 부분
 //--------------------------------------------------------------------
@@ -227,6 +244,10 @@ mylib_tree::CBSTree<T>::~CBSTree()
 }
 
 // 1) 변경(Insert, Delete)
+//--------------------------------------------------------------------
+// 함수명: m_Insert
+// 용도: 노드 추가 연산
+//--------------------------------------------------------------------
 template <typename T>
 void mylib_tree::CBSTree<T>::m_Insert(IN st_Node<T> *pNode, IN T key)
 {
@@ -252,7 +273,13 @@ void mylib_tree::CBSTree<T>::m_Insert(IN st_Node<T> *pNode, IN T key)
 		parent->m_left = newNode;
 	else
 		parent->m_right = newNode;
+	++m_nodeCnt;
 }
+
+//--------------------------------------------------------------------
+// 함수명: m_Delete
+// 용도: 노드 삭제 연산
+//--------------------------------------------------------------------
 template <typename T>
 void mylib_tree::CBSTree<T>::m_Delete(IN st_Node<T> *pNode, IN T key)
 {
@@ -280,8 +307,14 @@ void mylib_tree::CBSTree<T>::m_Delete(IN st_Node<T> *pNode, IN T key)
 		pred->m_left = dNode->m_left;
 		pred->m_left->m_parent = pred;
 	}
+
+	--m_nodeCnt;
 }
 
+//--------------------------------------------------------------------
+// 함수명: m_Transplant
+// 용도: 노드 삭제 보조 연산
+//--------------------------------------------------------------------
 template <typename T>
 void mylib_tree::CBSTree<T>::m_Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode)
 {
