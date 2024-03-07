@@ -52,20 +52,22 @@ namespace mylib_tree
 		virtual st_Node<T> *Maximum(IN st_Node<T> *pNode) override;
 
 		// 3) 순회(PreOrder, InOrder, PostOrder)
-		virtual void PreOrderPrint() override;
-		virtual void InOrderPrint() override;
-		virtual void PostOrderPrint() override;
-
-		// 3) 순회(PreOrder, InOrder, PostOrder)
 		virtual void PreOrder(IN st_Node<T> *pNode) override;
 		virtual void InOrder(IN st_Node<T> *pNode) override;
 		virtual void PostOrder(IN st_Node<T> *pNode) override;
 
 		// 4) 기타 연산
+		// 트리의 노드 갯수 반환
 		virtual void Count() override;
 
+		// 순회 결과 출력
+		virtual void PreOrderPrint() override;
+		virtual void InOrderPrint() override;
+		virtual void PostOrderPrint() override;
+
 	private:
-		// 1) 변경(Insert, Delete)
+		// 추가적으로 사용하는 연산
+		// 1) 변경(Transplant, Delete시 사용)
 		void Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode);
 
 		st_Node<T> *m_pRoot;
@@ -126,9 +128,9 @@ void mylib_tree::CBSTree<T>::Delete(IN const T &key)
 		return;
 
 	if (dNode->m_left == &m_NIL)
-		Transplant(dNode, dNode->m_left);
-	else if (dNode->m_right == &m_NIL)
 		Transplant(dNode, dNode->m_right);
+	else if (dNode->m_right == &m_NIL)
+		Transplant(dNode, dNode->m_left);
 	else
 	{
 		succ = Minimum(dNode->m_right);

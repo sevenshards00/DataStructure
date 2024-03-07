@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 탐색(Search)
 * 파일명: RBTree.h
-* 파일 버전: 0.1
+* 파일 버전: 0.11
 * 작성자: Sevenshards
-* 작성 일자: 2024-03-06
-* 이전 버전 작성 일자:
-* 버전 내용: 레드 블랙 트리 (C++, Template)
-* 이전 버전 내용:
+* 작성 일자: 2024-03-07
+* 이전 버전 작성 일자: 2024-03-06
+* 버전 내용: 레드 블랙 트리 구현 완료 (C++, Template)
+* 이전 버전 내용: 레드 블랙 트리로 확장 (C++, Template)
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -67,10 +67,11 @@ namespace mylib_tree
 
 	private:
 		// 1) 변경(Insert, Delete)
-		void RBTransplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode);
+		void Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode);
 		void LeftRotate(IN st_Node<T> *target);
 		void RightRotate(IN st_Node<T> *target);
 		void InsertFixUp(IN st_Node<T> *newNode);
+		void DeleteFixUp(IN st_Node<T> *pSucc);
 
 		st_Node<T> *m_pRoot;
 		st_Node<T> m_NIL;
@@ -125,32 +126,48 @@ void mylib_tree::RBTree<T>::Insert(IN const T &key)
 template <typename T>
 void mylib_tree::RBTree<T>::Delete(IN const T &key)
 {
-	st_Node<T> *dNode = Search(key);
-	st_Node<T> *pred = nullptr;
-
-	if (dNode == nullptr)
+	st_Node<T> *dNode = nullptr;
+	st_Node<T> *succ = nullptr;
+	st_Node<T> *target = Search(key);
+	
+	if (target == nullptr)
 		return;
 
-	if (dNode->m_left == &m_NIL)
-		RBTransplant(dNode, dNode->m_left);
-	else if (dNode->m_right == &m_NIL)
-		RBTransplant(dNode, dNode->m_right);
+	dNode = target;
+
+	if (target->m_left == &m_NIL)
+	{
+		succ = target->m_right;
+		Transplant(target, target->m_right);
+	}
+	else if (target->m_right == &m_NIL)
+	{
+		succ = target->m_left;
+		Transplant(target, target->m_left);
+	}
 	else
 	{
-		pred = Minimum(dNode->m_right);
+		dNode = Minimum(target->m_right);
+		succ = dNode->m_right;
 
-		if (pred != dNode->m_right)
+		if (dNode != target->m_right)
 		{
-			RBTransplant(pred, pred->m_right);
-			pred->m_right = dNode->m_right;
-			pred->m_right->m_parent = pred;
+			Transplant(dNode, dNode->m_right);
+			dNode->m_right = target->m_right;
+			dNode->m_right->m_parent = dNode;
 		}
-
-		RBTransplant(dNode, pred);
-		pred->m_left = dNode->m_left;
-		pred->m_left->m_parent = pred;
+		else
+			succ->m_parent = dNode;
+		Transplant(target, dNode);
+		dNode->m_left = target->m_left;
+		dNode->m_left->m_parent = target;
+		dNode->m_color = target->m_color;
 	}
 
+	if (target->m_color == COLOR::BLACK)
+		DeleteFixUp(succ);
+
+	delete target;
 	--m_nodeCnt;
 }
 
@@ -341,7 +358,7 @@ mylib_tree::RBTree<T>::~RBTree()
 // 용도: 노드 삭제 보조 연산
 //--------------------------------------------------------------------
 template <typename T>
-void mylib_tree::RBTree<T>::RBTransplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode)
+void mylib_tree::RBTree<T>::Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode)
 {
 	if (dPos->m_parent == &m_NIL)
 		m_pRoot = pNode;
@@ -484,4 +501,93 @@ void mylib_tree::RBTree<T>::InsertFixUp(IN st_Node<T> *newNode)
 	}
 	// loop 종료 후에는 루트 노드를 검은색으로 바꿔서 레드블랙 트리의 특성을 유지.
 	m_pRoot->m_color = COLOR::BLACK;
+}
+
+template <typename T>
+void mylib_tree::RBTree<T>::DeleteFixUp(IN st_Node<T> *pSucc)
+{
+	st_Node<T> *sibling = nullptr;
+
+	while (pSucc != m_pRoot && pSucc->m_color == COLOR::BLACK)
+	{
+		// 이중 흑색 노드가 왼쪽에 있다면
+		if (pSucc == pSucc->m_parent->m_left)
+		{
+			sibling = pSucc->m_parent->m_right;
+			// Case1: 형제 노드의 색이 적색이라면
+			// Case2~4로 넘겨서 처리
+			if (sibling->m_color == COLOR::RED)
+			{
+				sibling->m_color = COLOR::BLACK;
+				pSucc->m_parent->m_color = COLOR::RED;
+				LeftRotate(pSucc->m_parent);
+				sibling = pSucc->m_parent->m_right;
+			}
+			// Case2~4: 형제 노드의 색이 흑색일 때
+			// Case2: 형제 노드의 자식 노드 모두가 흑색일 경우
+			if (sibling->m_left->m_color == COLOR::BLACK && sibling->m_right->m_color == COLOR::BLACK)
+			{
+				sibling->m_color = COLOR::RED;
+				pSucc = pSucc->m_parent;
+			}
+			else
+			{
+				// Case3: 형제 노드의 왼쪽 자식 노드가 적색일 경우
+				// 사실상 Case4로 만들어서 처리하는 것
+				if (sibling->m_right->m_color == COLOR::BLACK)
+				{
+					sibling->m_left->m_color = COLOR::BLACK;
+					sibling->m_color = COLOR::RED;
+					RightRotate(sibling);
+					sibling = pSucc->m_parent->m_right;
+				}
+				// Case4: 형제 노드의 오른쪽 자식 노드가 적색일 경우
+				sibling->m_color = pSucc->m_parent->m_color;
+				pSucc->m_parent->m_color = COLOR::BLACK;
+				sibling->m_right->m_color = COLOR::BLACK;
+				LeftRotate(pSucc->m_parent);
+				pSucc = m_pRoot;
+			}
+		}
+		// 이중 흑색 노드가 오른쪽에 있다면
+		else
+		{
+			sibling = pSucc->m_parent->m_left;
+			// Case1: 형제 노드의 색이 적색이라면
+			// Case2~4로 넘겨서 처리
+			if (sibling->m_color == COLOR::RED)
+			{
+				sibling->m_color = COLOR::BLACK;
+				pSucc->m_parent->m_color = COLOR::RED;
+				RightRotate(pSucc->m_parent);
+				sibling = pSucc->m_parent->m_left;
+			}
+			// Case2~4: 형제 노드의 색이 흑색일 때
+			// Case2: 형제 노드의 자식 노드 모두가 흑색일 경우
+			if (sibling->m_left->m_color == COLOR::BLACK && sibling->m_right->m_color == COLOR::BLACK)
+			{
+				sibling->m_color = COLOR::RED;
+				pSucc = pSucc->m_parent;
+			}
+			else
+			{
+				// Case3: 형제 노드의 오른쪽 자식 노드가 적색일 경우
+				// 사실상 Case4로 만들어서 처리하는 것
+				if (sibling->m_left->m_color == COLOR::BLACK)
+				{
+					sibling->m_right->m_color = COLOR::BLACK;
+					sibling->m_color = COLOR::RED;
+					LeftRotate(sibling);
+					sibling = pSucc->m_parent->m_left;
+				}
+				// Case4: 형제 노드의 왼쪽 자식 노드가 적색일 경우
+				sibling->m_color = pSucc->m_parent->m_color;
+				pSucc->m_parent->m_color = COLOR::BLACK;
+				sibling->m_left->m_color = COLOR::BLACK;
+				RightRotate(pSucc->m_parent);
+				pSucc = m_pRoot;
+			}
+		}
+	}
+	pSucc->m_color = COLOR::BLACK;
 }
