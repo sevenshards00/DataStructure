@@ -66,7 +66,7 @@ namespace mylib_tree
 		virtual void Count() override;
 
 	private:
-		// 1) 변경(Insert, Delete)
+		// 추가 보조 연산
 		void Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode);
 		void LeftRotate(IN st_Node<T> *target);
 		void RightRotate(IN st_Node<T> *target);
@@ -171,7 +171,7 @@ void mylib_tree::RBTree<T>::Delete(IN const T &key)
 	--m_nodeCnt;
 }
 
-// 2) 질의(Search, Minimum, Maximum, Predecessor, Successor)
+// 2) 질의(Search, Minimum, Maximum)
 //--------------------------------------------------------------------
 // 함수명: Search
 // 용도: 해당 Key값을 가지고 있는 노드의 값 출력 (현재 기준으로는 Key를 출력)
@@ -354,7 +354,7 @@ mylib_tree::RBTree<T>::~RBTree()
 
 // 1) 변경(Insert, Delete)
 //--------------------------------------------------------------------
-// 함수명: m_RBTransplant
+// 함수명: Transplant
 // 용도: 노드 삭제 보조 연산
 //--------------------------------------------------------------------
 template <typename T>
@@ -372,8 +372,8 @@ void mylib_tree::RBTree<T>::Transplant(IN st_Node<T> *dPos, IN st_Node<T> *pNode
 }
 
 //--------------------------------------------------------------------
-// 함수명: m_LeftRoate
-// 용도: 회전 연산
+// 함수명: LeftRoate
+// 용도: 좌회전 연산
 //--------------------------------------------------------------------
 template <typename T>
 void mylib_tree::RBTree<T>::LeftRotate(IN st_Node<T> *target)
@@ -400,8 +400,8 @@ void mylib_tree::RBTree<T>::LeftRotate(IN st_Node<T> *target)
 }
 
 //--------------------------------------------------------------------
-// 함수명: m_RightRotate
-// 용도: 회전 연산
+// 함수명: RightRotate
+// 용도: 우회전 연산
 //--------------------------------------------------------------------
 template <typename T>
 void mylib_tree::RBTree<T>::RightRotate(IN st_Node<T> *target)
