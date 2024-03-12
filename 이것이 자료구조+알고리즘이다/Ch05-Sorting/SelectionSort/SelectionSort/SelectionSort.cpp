@@ -1,12 +1,12 @@
 ﻿/*
 * 이것이 자료구조+알고리즘이다 - 정렬(Sorting)
 * 파일명: SelectionSort.cpp
-* 파일 버전: 0.1
+* 파일 버전: 0.11
 * 작성자: Sevenshards
 * 작성 일자: 2024-03-12
-* 이전 버전 작성 일자:
-* 버전 내용: 간단한 선택 정렬 구현
-* 이전 버전 내용:
+* 이전 버전 작성 일자: 2024-03-12
+* 버전 내용: 로직 오류 수정
+* 이전 버전 내용: 간단한 선택 정렬 구현
 */
 
 #include <iostream>
@@ -25,13 +25,14 @@ void SelectionSort(int arr[], int len)
 
 		for (int j = i + 1; j != len; ++j)
 		{
-			if (arr[min_idx] > arr[j])
-			{
-				temp = arr[j];
-				arr[j] = arr[min_idx];
-				arr[min_idx] = temp;
-			}
+			
+			if (arr[j] < arr[min_idx])
+				min_idx = j;
 		}
+
+		temp = arr[i];
+		arr[i] = arr[min_idx];
+		arr[min_idx] = temp;
 	}
 
 }
