@@ -67,7 +67,7 @@ namespace mylib
 
 		void Print()
 		{
-			for (int i = 1; i != m_capacity; ++i)
+			for (int i = 1; i != m_capacity + 1; ++i)
 				std::cout << m_arr[i] << ' ';
 			std::cout << '\n';
 		}
