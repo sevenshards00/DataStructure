@@ -36,35 +36,7 @@ namespace mylib
 			BuildMaxHeap(m_arr);
 
 		}
-		void MaxHeapify(IN T arr[], IN int idx)
-		{
-			while (true)
-			{
-				int l_idx = GetLeftIdx(idx);
-				int r_idx = GetRightIdx(idx);
-				int max_idx;
-				if (l_idx <= m_capacity && arr[l_idx] > arr[idx])
-					max_idx = l_idx;
-				else
-					max_idx = idx;
-
-				if (r_idx <= m_capacity && arr[r_idx] > arr[max_idx])
-					max_idx = r_idx;
-
-				if (max_idx == idx)
-					return;
-
-				Swap(idx, max_idx);
-				idx = max_idx;
-			}
-		}
-
-		void BuildMaxHeap(T arr[])
-		{
-			for (int i = m_capacity / 2; i != 0; --i)
-				MaxHeapify(arr, i);
-		}
-
+		
 		void Print()
 		{
 			for (int i = 1; i != m_capacity + 1; ++i)
@@ -96,6 +68,35 @@ namespace mylib
 			T temp = m_arr[idx1];
 			m_arr[idx1] = m_arr[idx2];
 			m_arr[idx2] = temp;
+		}
+
+		void BuildMaxHeap(T arr[])
+		{
+			for (int i = m_capacity / 2; i != 0; --i)
+				MaxHeapify(arr, i);
+		}
+
+		void MaxHeapify(IN T arr[], IN int idx)
+		{
+			while (true)
+			{
+				int l_idx = GetLeftIdx(idx);
+				int r_idx = GetRightIdx(idx);
+				int max_idx;
+				if (l_idx <= m_capacity && arr[l_idx] > arr[idx])
+					max_idx = l_idx;
+				else
+					max_idx = idx;
+
+				if (r_idx <= m_capacity && arr[r_idx] > arr[max_idx])
+					max_idx = r_idx;
+
+				if (max_idx == idx)
+					return;
+
+				Swap(idx, max_idx);
+				idx = max_idx;
+			}
 		}
 	};
 }
